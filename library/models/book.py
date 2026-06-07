@@ -19,16 +19,25 @@ class Book:
 
     # TODO: 클래스 변수 book_count 선언 및 증가 로직 추가
     # TODO: 생성 시 book_count 증가
+    
+
+
     # book_count: int = 0  # 힌트: dataclass의 필드가 아닌 클래스 속성으로 선언
-    def __init__(self):
-        pass
+    def __post_init__(self):
+        Book.book_count += 1
 
     def __str__(self) -> str:
         # TODO: 지정된 문자열 포맷 반환
         # e.g. 책이름 by 지은이 (2001)
-        return None
+        return f"{self.title} by {self.author} ({self.year})"
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Book":
         # TODO: dict에서 title/author/year를 읽어 Book 생성
-        raise NotImplementedError
+        return cls(
+            title=data['title'],
+            author=data['author'],
+            year=data['year']
+        )
+
+Book.book_count = 0
